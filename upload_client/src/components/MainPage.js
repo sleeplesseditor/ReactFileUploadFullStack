@@ -5,6 +5,7 @@ const MainPage = () => {
     const [percentage, setPercentage] = useState(0);
     const [preview, setPreview] = useState(null);
     const [enableDragDrop, setEnableDragDrop] = useState(true);
+    const [stateXhr, setStateXhr] = useState(null);
     const doNothing = event => event.preventDefault();
     
     const onDragEnter = event => {
@@ -65,10 +66,19 @@ const MainPage = () => {
             // XHR - Make Request  
             xhr.open('POST', 'http://localhost:5000/upload');
             xhr.send(payload);
+            setStateXhr(xhr);
             setEnableDragDrop(false);
         }
         event.preventDefault();
     }
+
+    const onAbortClick = () => {
+        stateXhr.abort();
+        setPreview(null);
+        setStatus('Drop Here');
+        setPercentage(0);
+        setEnableDragDrop(true);
+    };
 
     return (
         <div 
@@ -81,9 +91,18 @@ const MainPage = () => {
             <div className={`ImagePreview ${preview ? 'Show' : ''}`}>
             <div style={{ backgroundImage: `url(${preview})` }}></div>
         </div>
-        <div className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} onDragOver={onDragOver} onDragLeave={onDragEnter} onDrop={onDrop}>
+        <div 
+            className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} 
+            onDragOver={onDragOver} 
+            onDragLeave={onDragEnter} 
+            onDrop={onDrop}
+        >
             <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
-                <div className="ImageProgressImage" style={{ backgroundImage: `url(${preview})` }}></div>
+                <div 
+                    className="ImageProgressImage" 
+                    style={{ backgroundImage: `url(${preview})` }}
+                >
+                </div>
                 <div 
                     className="ImageProgressUploaded" 
                     style={{ 
@@ -95,7 +114,7 @@ const MainPage = () => {
                 <div 
                     className={`Status ${status.indexOf('%') > -1 || status === 'Done' ? 'Uploading' : ''}`}
                 >
-                    {status}
+                    {status.indexOf('%') > -1 && <div className="Abort" onClick={onAbortClick}><span>&times;</span></div>}
                 </div> 
             </div> 
         </div> 
