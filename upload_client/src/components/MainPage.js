@@ -92,12 +92,14 @@ const MainPage = () => {
             <div style={{ backgroundImage: `url(${preview})` }}></div>
         </div>
         <div 
-            className={`DropArea ${status === 'Drop' ? 'Over' : ''}`} 
+            className={`DropArea ${status === 'Drop' ? 'Over' : ''} ${status.indexOf('%') > -1 || status === 'Done' ? 'Uploading' : ''}`} 
             onDragOver={onDragOver} 
             onDragLeave={onDragEnter} 
             onDrop={onDrop}
         >
-            <div className={`ImageProgress ${preview ? 'Show' : ''}`}>
+            <div 
+                className={`ImageProgress ${preview ? 'Show' : ''}`}
+            >
                 <div 
                     className="ImageProgressImage" 
                     style={{ backgroundImage: `url(${preview})` }}
@@ -107,15 +109,14 @@ const MainPage = () => {
                     className="ImageProgressUploaded" 
                     style={{ 
                         backgroundImage: `url(${preview})`, 
-                        clipPath: `inset(${100 - Number(percentage)}% 0 0 0);` 
+                        clipPath: `inset(${100 - Number(percentage)}% 0 0 0)`
                     }}>
                 </div>
             </div>
-                <div 
-                    className={`Status ${status.indexOf('%') > -1 || status === 'Done' ? 'Uploading' : ''}`}
-                >
-                    {status.indexOf('%') > -1 && <div className="Abort" onClick={onAbortClick}><span>&times;</span></div>}
-                </div> 
+                <div className={`Status ${status.indexOf('%') > -1 || status === 'Done' ? 'Uploading' : ''}`}>
+                    {status}
+                </div>
+                {status.indexOf('%') > -1 && <div className="Abort" onClick={onAbortClick}><span>&times;</span></div>}
             </div> 
         </div> 
     );
