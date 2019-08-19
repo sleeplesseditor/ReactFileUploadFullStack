@@ -1,0 +1,27 @@
+{
+  "name": "upload_fullstack",
+  "version": "1.0.0",
+  "description": "A full-stack file upload system built using React and Express.",
+  "main": "index.js",
+  "dependencies": {
+    "concurrently": "^4.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "npm run start --prefix upload_api",
+    "client": "npm run start --prefix upload_client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sleeplesseditor/ReactFileUploadFullStack.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sleeplesseditor/ReactFileUploadFullStack/issues"
+  },
+  "homepage": "https://github.com/sleeplesseditor/ReactFileUploadFullStack#readme"
+}
